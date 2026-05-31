@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Skills Check-In — Grades 6–10</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12141A;--ink2:#3D4052;--muted:#7B7F96;
+  --bg:#F3F4F8;--white:#FFFFFF;--card:#FFFFFF;
+  --border:#E2E4EE;
+  --purple:#5C3FC4;--purple-l:#EEE9FC;--purple-m:#7B5FD4;
+  --teal:#0F8A7A;--teal-l:#E1F5F2;
+  --rose:#D43F6A;--rose-l:#FDE8EF;
+  --amber:#C47C0F;--amber-l:#FDF2DC;
+  --blue:#1A5ABF;--blue-l:#E4EDF9;
+  --green:#1A7A40;--green-l:#E4F5EC;
+  --orange:#C45010;--orange-l:#FDEEE6;
+  --red:#B02020;--red-l:#FDEAEA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* TOP BAR */
+.topbar{background:var(--purple);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:15px;color:#fff;letter-spacing:-.01em}
+.topbar-logo span{opacity:.55}
+.grade-tag{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:700;color:#fff;letter-spacing:.06em;text-transform:uppercase}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#3A2A9A 0%,#5C3FC4 55%,#7B5FD4 100%);padding:3rem 1.5rem 4rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::before{content:'';position:absolute;top:-40px;left:30%;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-inner{max-width:680px;margin:0 auto;position:relative;z-index:1}
+.hero-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:1.25rem;letter-spacing:.04em}
+.hero-chip-dot{width:7px;height:7px;border-radius:50%;background:#7BEECC}
+h1{font-family:'Nunito',sans-serif;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+h1 em{color:#B8F0DE;font-style:normal}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.65);line-height:1.7;max-width:500px;margin-bottom:1.75rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:8px}
+.hpill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8)}
+
+/* MAIN */
+.main{max-width:700px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+/* PROGRESS */
+.prog{margin-bottom:1.75rem}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.prog-label{font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--ink2)}
+.prog-count{font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--purple)}
+.prog-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--purple-m));border-radius:4px;transition:width .5s ease}
+
+/* DOMAIN TABS */
+.dtabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.dtab{padding:5px 12px;border-radius:20px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;border:1.5px solid var(--border);background:var(--white);color:var(--muted);transition:all .2s;cursor:default}
+.dtab.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.dtab.done{background:var(--green-l);border-color:var(--green);color:var(--green)}
+
+/* SECTION HEADER */
+.sec-head{margin-bottom:1.25rem}
+.sec-name{font-family:'Nunito',sans-serif;font-size:21px;font-weight:900;color:var(--ink);margin-bottom:.25rem}
+.sec-sub{font-size:13px;color:var(--muted)}
+.sec-bar{width:36px;height:4px;border-radius:2px;background:var(--purple);margin:.6rem 0}
+
+/* Q CARDS */
+.qcard{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:.85rem;transition:border-color .2s}
+.qcard.done{border-color:var(--purple)}
+.qn{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:.5rem}
+.qt{font-size:15px;color:var(--ink);line-height:1.6;margin-bottom:1.1rem}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sbt{padding:10px 4px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer;text-align:center;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px}
+.sbt-n{font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:var(--muted)}
+.sbt-l{font-size:9px;font-weight:600;color:var(--muted);line-height:1.3}
+.sbt:hover{border-color:var(--purple);background:var(--purple-l)}
+.sbt:hover .sbt-n,.sbt:hover .sbt-l{color:var(--purple)}
+.sbt.v1 .sbt-n,.sbt.v1 .sbt-l{color:var(--green)}.sbt.v1{background:var(--green-l);border-color:var(--green)}
+.sbt.v2 .sbt-n,.sbt.v2 .sbt-l{color:var(--blue)}.sbt.v2{background:var(--blue-l);border-color:var(--blue)}
+.sbt.v3 .sbt-n,.sbt.v3 .sbt-l{color:var(--amber)}.sbt.v3{background:var(--amber-l);border-color:var(--amber)}
+.sbt.v4 .sbt-n,.sbt.v4 .sbt-l{color:var(--orange)}.sbt.v4{background:var(--orange-l);border-color:var(--orange)}
+.sbt.v5 .sbt-n,.sbt.v5 .sbt-l{color:var(--red)}.sbt.v5{background:var(--red-l);border-color:var(--red)}
+.scale-ends{display:flex;justify-content:space-between;font-size:10px;color:#bbb;margin-top:5px}
+
+/* NAV */
+.nav{display:flex;gap:10px;align-items:center;margin-top:1.75rem;flex-wrap:wrap}
+.btn{padding:12px 26px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;border:none;border-radius:10px;transition:all .16s;letter-spacing:.01em}
+.btn-purple{background:var(--purple);color:#fff}
+.btn-purple:hover{background:#4A30A8;transform:translateY(-1px)}
+.btn-purple:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.btn-back{background:transparent;color:var(--muted);border:1.5px solid var(--border)}
+.btn-back:hover{border-color:var(--ink2);color:var(--ink2)}
+.nav-tip{font-size:12px;color:var(--muted);margin-left:auto}
+
+/* RESULTS */
+.results{display:none}
+.score-banner{background:linear-gradient(135deg,#3A2A9A,#5C3FC4);border-radius:18px;padding:2.5rem;margin-bottom:1.5rem;text-align:center;position:relative;overflow:hidden}
+.score-banner::before{content:'';position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.07)}
+.score-circle{width:110px;height:110px;border-radius:50%;border:3px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1rem}
+.score-n{font-family:'Nunito',sans-serif;font-size:38px;font-weight:900;color:#fff}
+.score-d{font-size:11px;color:rgba(255,255,255,.4)}
+.score-pill{display:inline-block;padding:5px 18px;border-radius:20px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;margin-bottom:.75rem}
+.score-head{font-family:'Nunito',sans-serif;font-size:20px;font-weight:900;color:#fff;margin-bottom:.4rem}
+.score-sub{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6}
+.domains{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.dc{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.25rem}
+.dc-name{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:.4rem}
+.dc-score{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;margin-bottom:.4rem}
+.dc-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-bottom:.3rem}
+.dc-fill{height:100%;border-radius:3px;transition:width 1s .2s}
+.dc-status{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800}
+
+/* RUBRIC */
+.rubric{background:var(--white);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem}
+.rub-head{background:var(--ink);padding:1rem 1.5rem}
+.rub-head h3{font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;color:#fff}
+.rub-head p{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px}
+.rr{display:grid;grid-template-columns:110px 50px 1fr;gap:1rem;padding:.9rem 1.5rem;border-bottom:1px solid var(--border);align-items:start}
+.rr:last-child{border-bottom:none}
+.rbg{font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;display:inline-block;white-space:nowrap}
+.rrange{font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--ink)}
+.rdesc{font-size:12px;color:var(--ink2);line-height:1.55}
+
+/* RECS */
+.recs{background:var(--purple-l);border:1.5px solid #C5B5F0;border-radius:14px;padding:1.5rem;margin-bottom:1.5rem}
+.recs h3{font-family:'Nunito',sans-serif;font-size:16px;font-weight:900;color:var(--purple);margin-bottom:1rem}
+.ri{display:flex;gap:10px;margin-bottom:.6rem;align-items:flex-start}
+.rdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.rtxt{font-size:13px;color:var(--ink2);line-height:1.55}
+.disc{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;font-size:11px;color:var(--muted);line-height:1.65;margin-bottom:1.5rem}
+.restart-wrap{text-align:center}
+.btn-restart{padding:12px 32px;background:var(--purple);color:#fff;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+.btn-restart:hover{background:#4A30A8}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">Brain Skills <span>Check-In</span></div>
+  <div class="grade-tag">Grades 6–10</div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-chip"><div class="hero-chip-dot"></div>Self-Report Assessment</div>
+    <h1>How well does your<br>brain <em>get stuff done?</em></h1>
+    <p class="hero-desc">This quick check-in helps you figure out where your brain is crushing it — and where things get harder. It's not a test. There are no wrong answers. Just be real with yourself.</p>
+    <div class="hero-pills">
+      <div class="hpill">20 questions</div>
+      <div class="hpill">5 skill areas</div>
+      <div class="hpill">About 5 minutes</div>
+      <div class="hpill">Grades 6–10</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div id="assessment">
+    <div class="prog">
+      <div class="prog-top">
+        <div class="prog-label" id="plabel">Part 1 of 5 — Getting Started</div>
+        <div class="prog-count" id="ppct">0%</div>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
+    </div>
+
+    <div class="dtabs" id="dtabs"></div>
+
+    <div class="sec-head">
+      <div class="sec-name" id="sname"></div>
+      <div class="sec-bar"></div>
+      <div class="sec-sub" id="ssub"></div>
+    </div>
+
+    <div id="questions"></div>
+
+    <div class="nav">
+      <button class="btn btn-back" id="prevBtn" style="display:none" onclick="prevSec()">← Back</button>
+      <button class="btn btn-purple" id="nextBtn" disabled onclick="nextSec()">Next part →</button>
+      <div class="nav-tip" id="ntip">Answer all 4 to keep going</div>
+    </div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="score-banner">
+      <div class="score-circle">
+        <div class="score-n" id="rscore">—</div>
+        <div class="score-d">/100</div>
+      </div>
+      <div class="score-pill" id="rband">—</div>
+      <div class="score-head" id="rhead">—</div>
+      <div class="score-sub" id="rsub">—</div>
+    </div>
+
+    <div class="domains" id="dgrid"></div>
+
+    <div class="rubric">
+      <div class="rub-head">
+        <h3>What your score means</h3>
+        <p>Score guide for grades 6–10</p>
+      </div>
+      <div class="rr">
+        <div><span class="rbg" style="background:#E4F5EC;color:#1A7A40">Crushing it</span></div>
+        <div class="rrange">80–100</div>
+        <div class="rdesc">Your brain skills are strong! You handle tasks, stay focused, and manage your time well. Keep using what works and share your tricks with friends.</div>
+      </div>
+      <div class="rr">
+        <div><span class="rbg" style="background:#E4EDF9;color:#1A5ABF">On your way</span></div>
+        <div class="rrange">60–79</div>
+        <div class="rdesc">You've got a solid foundation but some things get tricky, especially when school gets busy or stressful. Learning a few strategies can help a lot.</div>
+      </div>
+      <div class="rr">
+        <div><span class="rbg" style="background:#FDF2DC;color:#C47C0F">Needs a boost</span></div>
+        <div class="rrange">40–59</div>
+        <div class="rdesc">Several areas are making school harder than it needs to be. It's worth talking to a teacher, counselor, or parent — they have tools that can genuinely help.</div>
+      </div>
+      <div class="rr">
+        <div><span class="rbg" style="background:#FDEEE6;color:#C45010">Getting tough</span></div>
+        <div class="rrange">20–39</div>
+        <div class="rdesc">These challenges are significantly affecting your school life. Please reach out to a counselor or trusted adult — you don't have to deal with this alone.</div>
+      </div>
+      <div class="rr">
+        <div><span class="rbg" style="background:#FDEAEA;color:#B02020">Need support now</span></div>
+        <div class="rrange">0–19</div>
+        <div class="rdesc">You're having a really hard time, and that matters. Please talk to a counselor, parent, or teacher right away. There's a lot they can do to help you.</div>
+      </div>
+    </div>
+
+    <div class="recs" id="recs">
+      <h3>Here's what we suggest for you</h3>
+      <div id="reclist"></div>
+    </div>
+
+    <div class="disc">
+      <strong>Heads up:</strong> This check-in is just a starting point — it's not a diagnosis or a final grade. Lots of students in grades 6–10 struggle with these skills, especially when school gets harder. If your score is low, it might be linked to ADHD, anxiety, or just not having learned these skills yet — all of which can be helped. Use this to start a conversation with someone you trust.
+    </div>
+
+    <div class="restart-wrap">
+      <button class="btn-restart" onclick="restart()">Try again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const secs=[
+  {name:"Getting Started on Things",sub:"How easy is it for you to just... begin?",color:"#1A7A40",light:"#E4F5EC",
+   qs:["I find it hard to start schoolwork, even when I know what to do.",
+       "I put things off until the last minute, even stuff that matters.",
+       "When I have a big project, I don't know how to break it into steps.",
+       "I make plans for my work but usually don't follow through."]},
+  {name:"Remembering & Staying Organized",sub:"Keeping track of stuff in your brain and in real life",color:"#1A5ABF",light:"#E4EDF9",
+   qs:["I forget things my teacher just told me.",
+       "I lose track of homework, materials, or when things are due.",
+       "My backpack, locker, or desk is always a mess.",
+       "I have trouble thinking about two things at once."]},
+  {name:"Paying Attention",sub:"Staying focused when it counts",color:"#C47C0F",light:"#FDF2DC",
+   qs:["I get distracted really easily during class or homework.",
+       "I zone out in class even when I'm trying to pay attention.",
+       "I get totally into things I like but avoid everything else.",
+       "I read the same line over and over and still don't get it."]},
+  {name:"Handling Feelings",sub:"Managing stress, frustration, and change",color:"#C45010",light:"#FDEEE6",
+   qs:["I feel totally overwhelmed when I have a lot of assignments.",
+       "When plans change unexpectedly, it really throws me off.",
+       "I can't let go of mistakes or bad grades — they stay in my head.",
+       "When something gets frustrating, I just give up on it."]},
+  {name:"Time & Knowing Yourself",sub:"Managing time and understanding your own learning",color:"#5C3FC4",light:"#EEE9FC",
+   qs:["I always think homework will take less time than it does.",
+       "I lose track of time and end up rushing or being late.",
+       "I don't check my work before turning it in.",
+       "I'm not sure whether I actually understand something until the test."]}
+];
+const labs=["Always","Often","Sometimes","Rarely","Never"];
+let cur=0,ans=[];
+
+function buildTabs(){
+  document.getElementById('dtabs').innerHTML=secs.map((s,i)=>`<div class="dtab" id="t${i}">${s.name.split(' ')[0]}</div>`).join('');
+}
+function updTabs(){
+  secs.forEach((_,i)=>{const t=document.getElementById('t'+i);t.className='dtab'+(i===cur?' active':i<cur?' done':'')});
+}
+function render(){
+  const s=secs[cur];
+  document.getElementById('sname').textContent=s.name;
+  document.getElementById('ssub').textContent=s.sub;
+  document.getElementById('plabel').textContent=`Part ${cur+1} of ${secs.length} — ${s.name}`;
+  const pct=Math.round(cur/secs.length*100);
+  document.getElementById('pbar').style.width=pct+'%';
+  document.getElementById('ppct').textContent=pct+'%';
+  updTabs();
+  const base=cur*4,qDiv=document.getElementById('questions');
+  qDiv.innerHTML='';
+  for(let i=0;i<4;i++){
+    const idx=base+i,v=ans[idx]||0;
+    let btns='';
+    for(let n=1;n<=5;n++){btns+=`<button class="sbt${v===n?' v'+n:''}" onclick="pick(${idx},${n},this)"><div class="sbt-n">${n}</div><div class="sbt-l">${labs[n-1]}</div></button>`}
+    const c=document.createElement('div');
+    c.className='qcard'+(v?' done':'');c.id='qc'+idx;
+    c.innerHTML=`<div class="qn">Question ${idx+1} of 20</div><div class="qt">${s.qs[i]}</div><div class="scale">${btns}</div><div class="scale-ends"><span>Always a problem</span><span>Never a problem</span></div>`;
+    qDiv.appendChild(c);
+  }
+  checkOk();
+  document.getElementById('prevBtn').style.display=cur>0?'':'none';
+}
+function pick(idx,v,btn){
+  ans[idx]=v;
+  btn.parentNode.querySelectorAll('.sbt').forEach(b=>b.className='sbt');
+  btn.className='sbt v'+v;
+  document.getElementById('qc'+idx).className='qcard done';
+  checkOk();
+}
+function checkOk(){
+  const base=cur*4,all=[0,1,2,3].every(i=>ans[base+i]);
+  const nb=document.getElementById('nextBtn');nb.disabled=!all;
+  document.getElementById('ntip').textContent=all?(cur<secs.length-1?'':'Tap to see your results!'):'Answer all 4 to keep going';
+  nb.textContent=cur===secs.length-1&&all?'See my results! →':'Next part →';
+}
+function nextSec(){if(cur<secs.length-1){cur++;render();window.scrollTo(0,0);}else showRes();}
+function prevSec(){if(cur>0){cur--;render();window.scrollTo(0,0);}}
+
+function showRes(){
+  document.getElementById('assessment').style.display='none';
+  document.getElementById('results').style.display='block';
+  const ds=secs.map((_,si)=>{const base=si*4,r=[0,1,2,3].reduce((a,i)=>a+(ans[base+i]||3),0);return Math.round((r-4)/16*100)});
+  const total=Math.round(ds.reduce((a,b)=>a+b)/5);
+  document.getElementById('rscore').textContent=total;
+  const bands=[
+    {min:80,label:'Crushing it!',bg:'#E4F5EC',color:'#1A7A40',head:"Your brain skills are legit strong.",sub:"You're doing really well managing your school life. Keep using what works!"},
+    {min:60,label:'On your way',bg:'#E4EDF9',color:'#1A5ABF',head:"Solid skills with some bumpy spots.",sub:"You're mostly managing, but some areas get harder when things pile up. A few strategies will go a long way."},
+    {min:40,label:'Needs a boost',bg:'#FDF2DC',color:'#C47C0F',head:"Some things are making school harder.",sub:"These challenges are real and pretty common. Talking to a counselor or teacher can help you find tools that work for your brain."},
+    {min:20,label:'Getting tough',bg:'#FDEEE6',color:'#C45010',head:"School is feeling really hard right now.",sub:"Please talk to a trusted adult — a counselor, parent, or teacher. You have more options than you might think."},
+    {min:0,label:'Need support now',bg:'#FDEAEA',color:'#B02020',head:"You're struggling a lot, and that's okay to say.",sub:"Please reach out to a counselor or parent today. You deserve support and there's real help available."}
+  ];
+  const b=bands.find(x=>total>=x.min);
+  const rp=document.getElementById('rband');rp.textContent=b.label;rp.style.background=b.bg;rp.style.color=b.color;
+  document.getElementById('rhead').textContent=b.head;document.getElementById('rsub').textContent=b.sub;
+  document.getElementById('dgrid').innerHTML=secs.map((s,i)=>{const sc=ds[i],bb=bands.find(x=>sc>=x.min);return`<div class="dc"><div class="dc-name">${s.name}</div><div class="dc-score" style="color:${s.color}">${sc}</div><div class="dc-bar"><div class="dc-fill" style="width:${sc}%;background:${s.color}"></div></div><div class="dc-status" style="color:${bb.color}">${bb.label}</div></div>`}).join('');
+  const recs=[];
+  if(total>=80){recs.push({c:'#1A7A40',t:"You're doing great — write down what systems and habits work for you."});recs.push({c:'#1A7A40',t:"Consider helping a classmate who struggles with organization or focus."});recs.push({c:'#1A7A40',t:"Challenge yourself with harder projects — your EF skills can handle it."});}
+  else if(total>=60){recs.push({c:'#1A5ABF',t:"Try using a planner, sticky notes, or a homework app to offload your brain."});recs.push({c:'#1A5ABF',t:"Break every assignment into just 3 steps and start with only Step 1."});recs.push({c:'#1A5ABF',t:"Identify your weakest area above and ask a teacher for one tip in that area."});}
+  else if(total>=40){recs.push({c:'#C47C0F',t:"Talk to your school counselor — they have real strategies and possibly accommodations."});recs.push({c:'#C47C0F',t:"Try the 'two-minute rule': if something takes less than 2 minutes, do it NOW."});recs.push({c:'#C47C0F',t:"Ask a parent or teacher to help you set up a daily homework routine."});recs.push({c:'#C47C0F',t:"Think about whether stress or worry might be making focus harder."});}
+  else{recs.push({c:'#C45010',t:"Please tell a parent, counselor, or teacher how hard things have been."});recs.push({c:'#C45010',t:"Ask your counselor if you can get tested for ADHD or a learning difference."});recs.push({c:'#C45010',t:"Ask your school about accommodations like extra time or smaller testing spaces."});recs.push({c:'#C45010',t:"Know this: struggling with EF is NOT about being lazy or dumb. Your brain just works differently."});}
+  const weak=ds.indexOf(Math.min(...ds));
+  recs.push({c:'#5C3FC4',t:`Your lowest area is "${secs[weak].name}" — that's the best place to start getting help.`});
+  document.getElementById('reclist').innerHTML=recs.map(r=>`<div class="ri"><div class="rdot" style="background:${r.c}"></div><div class="rtxt">${r.t}</div></div>`).join('');
+  window.scrollTo(0,0);
+}
+function restart(){cur=0;ans=[];document.getElementById('results').style.display='none';document.getElementById('assessment').style.display='block';render();window.scrollTo(0,0);}
+buildTabs();render();
+</script>
+</body>
+</html>
